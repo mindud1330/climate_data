@@ -79,3 +79,18 @@ summary(model_addC)
 ## VIF
 vif_values_addC <- vif(model_addC)
 print(vif_values_addC)
+
+# * 안뜨는 독립 변인 제외 
+X_cols = c('concern', 'aware_tot', 'risk_me', 'eco_at')
+C_cols = c('sex', 'age', 'area', 'pol')
+
+formula <- as.formula(paste(Y_cols, "~", 
+                                 paste(c(X_cols, C_cols), 
+                                       collapse = "+")))
+
+model <- lm(formula, data = data_centered)
+summary(model)
+
+## VIF
+vif_values <- vif(model)
+print(vif_values)
