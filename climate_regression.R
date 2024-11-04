@@ -46,7 +46,7 @@ data_centered$area <- as.factor(data_centered$area)
 data_centered$job <- as.factor(data_centered$job)
 
 ## model fit
-modelC_factor <- lm(formulaC, data = data_centered_factor)
+modelC_factor <- lm(formulaC, data = data_centered)
 summary(modelC_factor)
 ## VIF
 vif_values_Cfactor <- vif(modelC_factor)
