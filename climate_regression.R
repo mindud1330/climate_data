@@ -1,6 +1,7 @@
 library(readxl)
 library(dplyr)
 library(car)
+library(lm.beta)
 
 setwd("/Users/min/Library/Mobile Documents/com~apple~CloudDocs/Study/python/climate")
 df <- read_excel("climate_survey-2018.xlsx")
@@ -94,3 +95,10 @@ summary(model)
 ## VIF
 vif_values <- vif(model)
 print(vif_values)
+
+## beta
+formula <- as.formula(paste(Y_cols, "~", paste(X_cols, collapse = "+")))
+model <- lm(formula, data = data_centered)
+model_beta <- lm.beta(model)
+
+print(model_beta)
