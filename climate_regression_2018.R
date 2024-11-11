@@ -8,7 +8,7 @@ df <- read_excel("climate_survey-2018.xlsx")
 
 # data 
 X_cols = c('concern', 'satis_mean2', 'aware_tot', 
-          'occur', 'risk', 'risk_me', 'eco_at')
+          'occur', 'risk', 'risk_me', 'impact_n', 'eco_at')
 Y_cols = c('prac_tot')
 C_cols = c('sex', 'age', 'area', 'edu', 'job', 'child', 'income', 'pol')
 
@@ -17,7 +17,7 @@ data <- na.omit(data)
 
 # mean centering
 center_cols <- c("concern", "satis_mean2", "aware_tot", "occur", 
-                 "risk", "risk_me", "eco_at", 
+                 "risk", "risk_me", "impact_n", "eco_at", 
                  "prac_tot", 
                  "age", "edu", "income", "pol")
 
@@ -54,24 +54,10 @@ vif_values_Cfactor <- vif(modelC_factor)
 print(vif_values_Cfactor)
 
 # linear regression add control variables
-## sex and age
-formula_addC <- as.formula(paste(Y_cols, "~", 
-                                 paste(c(X_cols, "sex", "age"), collapse = "+")))
-
-model_addC <- lm(formula_addC, data = data_centered)
-summary(model_addC)
-
-## add area
-formula_addC <- as.formula(paste(Y_cols, "~", 
-                                 paste(c(X_cols, "sex", "age", "area"), 
-                                       collapse = "+")))
-
-model_addC <- lm(formula_addC, data = data_centered)
-summary(model_addC)
-
+C_cols = c('sex', 'age', 'area', 'pol')
 ## add pol
 formula_addC <- as.formula(paste(Y_cols, "~", 
-                                 paste(c(X_cols, "sex", "age", "area", "pol"), 
+                                 paste(c(X_cols, C_cols), 
                                        collapse = "+")))
 
 model_addC <- lm(formula_addC, data = data_centered)
@@ -81,7 +67,7 @@ summary(model_addC)
 vif_values_addC <- vif(model_addC)
 print(vif_values_addC)
 
-# * 안뜨는 독립 변인 제외 
+# *
 X_cols = c('concern', 'aware_tot', 'risk_me', 'eco_at')
 C_cols = c('sex', 'age', 'area', 'pol')
 
